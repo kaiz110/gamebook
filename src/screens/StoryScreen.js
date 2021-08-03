@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
 import { Overlay, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { UPDATE_PAGE } from '../lib/redux/actions/playActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { CODE } from '../utils/constant'
+import { CODE, NAME_REGEX } from '../utils/constant'
 import { PLAY_TEXT } from '../utils/string'
 
 const StoryScreen = ({navigation, route}) => {
@@ -18,6 +18,7 @@ const StoryScreen = ({navigation, route}) => {
 
     const subChar = useSelector(reducer => reducer.play.characters)
     const mainChar = useSelector(reducer => reducer.char)
+    const name = useMemo(() => mainChar != null ? mainChar.name : TEXT.anon, [mainChar])
     const [ escOverlay , setEscOverlay ] = useState(false)
     const [ dice, setDice ] = useState(0)
     const [ currentChoice, setCurrentChoice ] = useState(null)
@@ -63,7 +64,7 @@ const StoryScreen = ({navigation, route}) => {
             block = mainChar[atrb] < require
         }
         return <Button
-            title={item.slice(9)}
+            title={item.slice(9).replace(NAME_REGEX, name)}
             disabled={block}
             onPress={() => {
                 if(mainChar != null){
@@ -90,12 +91,16 @@ const StoryScreen = ({navigation, route}) => {
         />
     }
 
+    const renderHeader = () => {
+        return <Text>{pageContent.content.replace(NAME_REGEX , name)}</Text>
+    }
+
     return <View style={{flex: 1}}> 
         {pageContent.choices &&
             <FlatList
                 data={pageContent.choices}
                 keyExtractor={data => data}
-                ListHeaderComponent={<Text>{pageContent.content}</Text>}
+                ListHeaderComponent={renderHeader}
                 ListFooterComponent={<Button
                     title='Trở về page 1'
                     onPress={() => dispatch(UPDATE_PAGE(1))}

@@ -5,6 +5,7 @@ export const PLAY_TEXT = () => {
     return {
         no_character : 'Chưa có nhân vật !',
         success_rate: 'Tỷ lệ thành công',
+        anon: '<Vô danh>',
         runaway : 'Bỏ chạy',
         surrender: 'Đầu hàng ?',
         do_you_want_to_surrender: 'Bạn có thực sự muốn đầu hàng không ?',

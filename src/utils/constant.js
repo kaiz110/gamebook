@@ -18,3 +18,5 @@ export const CODE = {
     FA: 'FA', //fail
     DR: 'DR', // add
 }
+
+export const NAME_REGEX = /@main/g
