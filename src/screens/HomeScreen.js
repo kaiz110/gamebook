@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text, Button, FlatList, TouchableOpacity } from 'react-native'
+import { FAB } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
+import { Entypo } from '@expo/vector-icons'
 
 const mock = [
     {
@@ -22,6 +24,13 @@ const HomeScreen = ({navigation}) => {
                     onPress={() => navigation.navigate('Story', {name: item.name})}
                 />
             )}
+        />
+
+        <FAB 
+            placement='right'
+            style={{opacity: 0.91}}
+            color='rebeccapurple'
+            icon={<Entypo name='plus' size={25} color='white'/>}
         />
     </View>
 }

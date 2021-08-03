@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import { Input, Overlay, Button, Slider } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { CHAR_CREATE, CHAR_DEL, CHAR_ATRB } from '../lib/redux/actions/charActions'
@@ -85,7 +85,18 @@ const CharacterScreen = () => {
                     title={TEXT.delete_character}
                     containerStyle={{margin: 50}}
                     type='clear'
-                    onPress={() => dispatch(CHAR_DEL())}
+                    onPress={() => {
+                        Alert.alert( `${TEXT.delete_character} ?`, TEXT.you_sure_want_to_delete, [
+                            {
+                                text: TEXT.no,
+                                onPress: () => {}
+                            },
+                            {
+                                text: TEXT.yes,
+                                onPress: () => dispatch(CHAR_DEL())
+                            }
+                        ])
+                    }}
                 />
             </View>
         }

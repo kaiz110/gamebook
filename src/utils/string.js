@@ -33,6 +33,7 @@ export const PLAY_TEXT = () => {
         delete_character: 'Xoá nhân vật',
         create_character: 'Tạo nhân vật',
         name_character: 'Đặt tên cho nhân vật',
-        create: 'Tạo'
+        create: 'Tạo',
+        you_sure_want_to_delete: 'Bạn thực sự muốn xoá nhân vật ?'
     }
 }

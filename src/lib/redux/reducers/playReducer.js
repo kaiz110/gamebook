@@ -1,11 +1,11 @@
 import {story, characters} from '../../../utils/mock_data'
 
-// story : {
+// story : [{
 //     page: 1,
 //     content: ``,
 //     choices: [''],
 //     branch: ['']
-// }
+// }]
 
 // characters: {
 //     name: '',
