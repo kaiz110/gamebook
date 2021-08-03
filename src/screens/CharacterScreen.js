@@ -36,7 +36,7 @@ const CharacterScreen = () => {
                 <View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={{fontSize: 35,marginTop: 10}}>{charState.name}</Text>
-                        <Text style={{fontSize: 20}}>{TEXT.level}: {charState.lvl}</Text>
+                        <Text style={{fontSize: 20}}>{TEXT.level} {charState.lvl}</Text>
                     </View>
 
                     <View>

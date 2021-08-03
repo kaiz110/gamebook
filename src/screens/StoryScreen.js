@@ -66,6 +66,9 @@ const StoryScreen = ({navigation, route}) => {
         return <Button
             title={item.slice(9).replace(NAME_REGEX, name)}
             disabled={block}
+            raised
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.buttonStyles}
             onPress={() => {
                 if(mainChar != null){
                     switch(item.slice(0,4)){
@@ -91,16 +94,12 @@ const StoryScreen = ({navigation, route}) => {
         />
     }
 
-    const renderHeader = () => {
-        return <Text>{pageContent.content.replace(NAME_REGEX , name)}</Text>
-    }
-
     return <View style={{flex: 1}}> 
         {pageContent.choices &&
             <FlatList
                 data={pageContent.choices}
                 keyExtractor={data => data}
-                ListHeaderComponent={renderHeader}
+                ListHeaderComponent={<Text style={styles.content}>{pageContent.content.replace(NAME_REGEX , name)}</Text>}
                 ListFooterComponent={<Button
                     title='Trở về page 1'
                     onPress={() => dispatch(UPDATE_PAGE(1))}
@@ -117,6 +116,7 @@ const StoryScreen = ({navigation, route}) => {
             </View>
             <Button
                 title={dice?TEXT.OK:TEXT.roll_dice}
+                buttonStyle={styles.buttonStyles}
                 onPress={() => {
                     if(!dice) ftunTap(currentChoice)
                     else {
@@ -130,6 +130,19 @@ const StoryScreen = ({navigation, route}) => {
     </View>
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    content : {
+        fontSize: 19,
+        marginBottom: 20,
+        margin: 10
+    },
+    buttonContainer: {
+        marginBottom: 10, 
+        marginHorizontal: 10
+    },
+    buttonStyles: {
+        backgroundColor: 'darkcyan'
+    }
+})
 
 export default StoryScreen
