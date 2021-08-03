@@ -35,7 +35,7 @@ const CharacterScreen = () => {
             <View>
                 <View>
                     <View style={{alignItems: 'center'}}>
-                        <Text style={{fontSize: 35,}}>{charState.name}</Text>
+                        <Text style={{fontSize: 35,marginTop: 10}}>{charState.name}</Text>
                         <Text style={{fontSize: 20}}>{TEXT.level}: {charState.lvl}</Text>
                     </View>
 
@@ -44,7 +44,7 @@ const CharacterScreen = () => {
 
                         <Slider
                             trackStyle={{ height: 5 }}
-                            style={{ marginHorizontal: 5 }}
+                            style={{ marginHorizontal: 10 }}
                             minimumTrackTintColor={'gold'}
                             thumbStyle={{ height: 0, width: 0 }}
                             disabled
