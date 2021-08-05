@@ -3,10 +3,10 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react
 import { CommonActions } from '@react-navigation/native'
 import { Overlay, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { UPDATE_PAGE } from '../lib/redux/actions/playActions'
+import { UPDATE_PAGE } from '../../lib/redux/actions/playActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { CODE, NAME_REGEX } from '../utils/constant'
-import { PLAY_TEXT } from '../utils/string'
+import { CODE, NAME_REGEX } from '../../utils/constant'
+import { PLAY_TEXT } from '../../utils/string'
 
 const StoryScreen = ({navigation, route}) => {
     const dispatch = useDispatch()
