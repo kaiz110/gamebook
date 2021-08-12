@@ -14,7 +14,7 @@ const StoryScreen = ({navigation, route}) => {
     const storyName = route.params?.name
     const story = useSelector(reducer => reducer.play.story)
     const page = useSelector(reducer => reducer.play.currentPage)
-    const pageContent = story.find(val => val.page === page)
+    const pageContent = useMemo(() => story.find(val => val.page === page), [ story, page ])
 
     const subChar = useSelector(reducer => reducer.play.characters)
     const mainChar = useSelector(reducer => reducer.char)

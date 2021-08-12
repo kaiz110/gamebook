@@ -3,11 +3,13 @@ import { FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { StyleSheet, View, Text } from 'react-native'
 import { Divider, Button } from 'react-native-elements'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { DEL_PAGE } from '../../lib/redux/actions/createActions'
 
 const DetailScreen = ({navigation,route}) => {
+    const dispatch = useDispatch()
     const state = useSelector(reducer => reducer.create)
-    const book = useMemo(() => state.books.find(val => val.name === state.currentBook) ,[ state ]) 
+    const book = state.books.find(val => val.name === state.currentBook)
 
     return <View>
         <Text style={{alignSelf: 'center', fontSize: 24}}>{book.name}</Text>
@@ -27,10 +29,14 @@ const DetailScreen = ({navigation,route}) => {
             keyExtractor={data => String(data.page) + data.content}
             renderItem={({item}) => (
                 <TouchableOpacity 
-                    style={{borderWidth: 1, width: '100%', height: 50, margin: 10}}
+                    style={{borderWidth: 1, width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}
                     onPress={() => navigation.navigate('Page', {page: item})}
                 >
                     <Text style={{fontSize: 25}}>Page {item.page}</Text>
+
+                    <TouchableOpacity onPress={() => dispatch(DEL_PAGE(item.page))}>
+                        <Text>DELETE</Text>
+                    </TouchableOpacity>
                 </TouchableOpacity>
             )}
         />

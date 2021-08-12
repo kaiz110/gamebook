@@ -51,6 +51,14 @@ export default (state = init_state, action) => {
                 } else return val
             })
             return {...state, books}
+        case 'DEL_PAGE': 
+            const bookss = state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, story: val.story.filter(value => value.page !== action.payload)}
+                } else return val
+            })
+
+            return {...state, books: bookss}
         case 'ADD_CHAR':
             const book = state.books.map(val => {
                 if(val.name === state.currentBook) {
