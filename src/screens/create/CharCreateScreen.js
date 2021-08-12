@@ -20,6 +20,7 @@ const CharCreateScreen = () => {
     const [agi, setAgi] = useState('')
     const [exp, setExp] = useState('')
     const [notPass, setNotPass] = useState(true)
+    const [idDup, setIdDup] = useState(false)
 
     useEffect(() => {
         const hplv = Math.floor( Math.max(0, (+hp - 80)) / 50 )
@@ -32,15 +33,35 @@ const CharCreateScreen = () => {
 
     useEffect(() => {
         const sameId = book.characters.find(val => val.id === id)
-        if(sameId != undefined) setNotPass(true)
-        else requirement()
+        if(sameId != undefined) {
+            setNotPass(true)
+            setIdDup(true)
+        }
+        else {
+            requirement()
+            setIdDup(false)
+        }
     }, [ id ])
 
     const requirement = () => {
         const test = (atr) => /^\d+$/.test(atr)
-        const idLm = id >= 0 && id <= 999 && /^\d{3}$/.test(id)
-        if(test(hp) && test(atk) && test(def) && test(agi) && test(exp) && name !== '' && idLm) setNotPass(false)
+        const idL = /^\d{3}$/.test(id)
+        if(test(hp) && test(atk) && test(def) && test(agi) && test(exp) && name !== '' && idL) setNotPass(false)
         else setNotPass(true)
+    }
+
+    const onCancel = () => {
+        setName('')
+        setLv(1)
+        setId('')
+        setHp('')
+        setAtk('')
+        setDef('')
+        setAgi('')
+        setExp('')
+        setNotPass(true)
+        setIdDup(false)
+        setShowAdd(false)
     }
 
     return <View>
@@ -73,7 +94,11 @@ const CharCreateScreen = () => {
                         value={id}
                         onChangeText={setId}
                         keyboardType='numeric'
+                        maxLength={3}
                     />
+
+                    {idDup &&
+                    <Text>Id is duplicate</Text>}
 
                     <Text>Lvl {lvl}</Text>
 
