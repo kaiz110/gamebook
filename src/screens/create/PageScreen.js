@@ -112,6 +112,7 @@ const PageScreen = ({navigation, route}) => {
             case 'DUEL':
                 return battleWith == '' || battleWin == '' || battleLose == ''|| choiceTitle == ''
             case 'FTUN':
+                if(twoRoute) return route1 == '' || route2 == '' || choiceTitle == ''
                 return route1 == '' || route2 == '' || route3 == ''|| choiceTitle == ''
             case 'ATRB':
                 return atrbPass == '' || atrbValue == '' || choiceTitle == ''
@@ -131,19 +132,22 @@ const PageScreen = ({navigation, route}) => {
             />
         </View>
 
-        {choices.map((item, idex) => (
-            <TouchableOpacity 
+        {choices.map((item, idex) => {
+            const navipage = book.story.find(val => val.page === +item.slice(4,8))
+            const naviNow = item.substr(0,4) === 'NAVI'
+            return <TouchableOpacity 
                 key={item + idex}
                 style={{margin: 10, borderWidth: 1, width: SCREEN_WIDTH-20}}
                 onPress={() => deleteChoice(item)}
             >
-                <Text>{item}</Text>
+                <Text>{item} {naviNow ? (navipage == undefined ? 'trang khong ton tai' : null ) : null } </Text>
                 {branch.filter(val => val.slice(0,8) === item.slice(0,8)).map((b,i) => {
-                    return <Text key={b + i}>{b}</Text>
+                    const findPage = book.story.find(value => value.page === +b.slice(-4) )
+                    return <Text key={b + i}>{b} {findPage == undefined ? 'trang khong ton tai' : null}</Text>
                 })
                 }
             </TouchableOpacity>
-        ))}
+        })}
 
         <View>
             <Button
