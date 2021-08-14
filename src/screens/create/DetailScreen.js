@@ -1,15 +1,29 @@
-import React, { useMemo } from 'react'
+import React, { useEffect,useState ,  useLayoutEffect } from 'react'
 import { FlatList } from 'react-native'
-import { TouchableOpacity } from 'react-native'
-import { StyleSheet, View, Text } from 'react-native'
-import { Divider, Button } from 'react-native-elements'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { Divider, Button, Overlay } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { DEL_PAGE } from '../../lib/redux/actions/createActions'
+import { PUT_ON } from '../../lib/redux/actions/shelfActions'
+import { Feather } from '@expo/vector-icons'
 
 const DetailScreen = ({navigation,route}) => {
     const dispatch = useDispatch()
     const state = useSelector(reducer => reducer.create)
     const book = state.books.find(val => val.name === state.currentBook)
+    const [showUpload, setShowUpload] = useState(false)
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity 
+                    onPress={() => setShowUpload(true)}
+                >
+                    <Feather name='upload' size={25} style={{margin: 7}}/>
+                </TouchableOpacity>
+            )
+        })
+    }, [ navigation ])
 
     return <View>
         <Text style={{alignSelf: 'center', fontSize: 24}}>{book.name}</Text>
@@ -47,6 +61,26 @@ const DetailScreen = ({navigation,route}) => {
         >
             <Text style={{fontSize: 22, fontWeight: 'bold'}}>Add page</Text>
         </TouchableOpacity>
+
+        <Overlay isVisible={showUpload} onBackdropPress={() => setShowUpload(false)}>
+            <View>
+                <Text>Upload</Text>
+                <Text>you finished ?</Text>
+
+                <Button 
+                    title='Yes'
+                    onPress={() => {
+                        dispatch(PUT_ON(book))
+                        setShowUpload(false)
+                    }}
+                />
+
+                <Button
+                    title='No'
+                    onPress={() => setShowUpload(false)}
+                />
+            </View>
+        </Overlay>
 
     </View>
 }

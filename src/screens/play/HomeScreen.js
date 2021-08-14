@@ -1,26 +1,23 @@
 import React from 'react'
 import { StyleSheet, View, Text, Button, FlatList, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { Entypo } from '@expo/vector-icons'
-
-const mock = [
-    {
-        name: 'First One'
-    }
-]
+import { LOAD } from '../../lib/redux/actions/playActions'
 
 const HomeScreen = ({navigation}) => {
-    const state = useSelector(state => state)
     const dispatch = useDispatch()
+    const bookShelf = useSelector(reducer => reducer.shelf)
 
     return <View style={styles.container}>
         <FlatList
-            data={mock}
-            keyExtractor={data => data.name}
+            data={bookShelf}
+            keyExtractor={(data,i) => data.name + i}
             renderItem={({item}) => (
                 <Button
                     title={item.name}
-                    onPress={() => navigation.navigate('Story', {name: item.name})}
+                    onPress={() => {
+                        dispatch(LOAD(item))
+                        navigation.navigate('Story', {name: item.name})}
+                    }
                 />
             )}
         />

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { Overlay, Input, Button } from 'react-native-elements'
 import { Feather } from '@expo/vector-icons'
@@ -31,6 +31,7 @@ const ListScreen = ({navigation}) => {
             renderItem={({item}) => (
                 <Button
                     title={item.name}
+                    onLongPress={() => Alert.alert('hey', 'this is a long press', null, {cancelable: true})}
                     onPress={() => {
                         dispatch(CURRENT(item.name))
                         navigation.navigate('Detail')}

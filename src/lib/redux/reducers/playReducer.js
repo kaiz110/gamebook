@@ -29,6 +29,12 @@ export default (state = init_state, action) => {
             return {...state, currentPage: action.payload}
         case 'DECREMENT':
             return state - 1
+        case 'LOAD':
+            return {
+                story: action.payload.story,
+                characters: action.payload.characters,
+                currentPage: 1
+            }
         default:
             return state
     }

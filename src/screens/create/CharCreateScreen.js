@@ -52,7 +52,7 @@ const CharCreateScreen = () => {
 
     const onCancel = () => {
         setName('')
-        setLv(1)
+        setLvl(1)
         setId('')
         setHp('')
         setAtk('')
@@ -81,7 +81,7 @@ const CharCreateScreen = () => {
             }}
         />
 
-        <Overlay isVisible={showAdd} onBackdropPress={() => setShowAdd(false)}>
+        <Overlay isVisible={showAdd} onBackdropPress={onCancel}>
             <View style={{width: SCREEN_WIDTH * 0.75, margin: 10}}>
                 <ScrollView>
                     <Input
@@ -136,7 +136,7 @@ const CharCreateScreen = () => {
                         disabled={notPass}
                         onPress={() => {
                             dispatch(ADD_CHAR(name, id, lvl, hp, atk, def, agi, exp))
-                            setShowAdd(false)
+                            onCancel()
                         }}
                     />
                 </ScrollView>
