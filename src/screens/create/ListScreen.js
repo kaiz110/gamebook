@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Overlay, Input, Button } from 'react-native-elements'
 import { Feather } from '@expo/vector-icons'
 import { SCREEN_WIDTH } from '../../utils/constant'
-import { ADD_PROJECT, CURRENT } from '../../lib/redux/actions/createActions'
+import { ADD_PROJECT, CURRENT, DEL_PROJECT } from '../../lib/redux/actions/createActions'
 import { FlatList } from 'react-native'
 
 const ListScreen = ({navigation}) => {
@@ -31,7 +31,9 @@ const ListScreen = ({navigation}) => {
             renderItem={({item}) => (
                 <Button
                     title={item.name}
-                    onLongPress={() => Alert.alert('hey', 'this is a long press', null, {cancelable: true})}
+                    onLongPress={() => Alert.alert('delete', 'this is a long press', [
+                        {text: 'yes delete it !', onPress: () => dispatch(DEL_PROJECT(item))}
+                    ], {cancelable: true})}
                     onPress={() => {
                         dispatch(CURRENT(item.name))
                         navigation.navigate('Detail')}

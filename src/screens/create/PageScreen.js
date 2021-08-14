@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { StyleSheet, View, Text, ScrollView,FlatList, TouchableOpacity } from 'react-native'
 import { Input, Button, Overlay, CheckBox } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { ADD_PAGE } from '../../lib/redux/actions/createActions'
+import { ADD_ERROR, ADD_PAGE, REMOVE_ERROR } from '../../lib/redux/actions/createActions'
 import { SCREEN_WIDTH } from '../../utils/constant'
 
 
@@ -134,13 +134,15 @@ const PageScreen = ({navigation, route}) => {
 
         {choices.map((item, idex) => {
             const navipage = book.story.find(val => val.page === +item.slice(4,8))
-            const naviNow = item.substr(0,4) === 'NAVI'
+            const naviNow = item.substr(0,4) === 'NAVI' && navipage == undefined
+            const duelId = book.characters.find(val => val.id === item.slice(5,8))
+            const duelNow = item.substr(0,4) === 'DUEL' && duelId == undefined
             return <TouchableOpacity 
                 key={item + idex}
                 style={{margin: 10, borderWidth: 1, width: SCREEN_WIDTH-20}}
                 onPress={() => deleteChoice(item)}
             >
-                <Text>{item} {naviNow ? (navipage == undefined ? 'trang khong ton tai' : null ) : null } </Text>
+                <Text>{item} {naviNow ? 'trang khong ton tai' : duelNow ? 'id khong ton tai' : null } </Text>
                 {branch.filter(val => val.slice(0,8) === item.slice(0,8)).map((b,i) => {
                     const findPage = book.story.find(value => value.page === +b.slice(-4) )
                     return <Text key={b + i}>{b} {findPage == undefined ? 'trang khong ton tai' : null}</Text>

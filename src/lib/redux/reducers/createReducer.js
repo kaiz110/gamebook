@@ -1,11 +1,14 @@
+import { story, characters } from '../../../utils/mock_data'
+
 
 const init_state = {
     currentBook : null,
     books: [{
-        name: 'hoimoi',
-        summary: 'ishoimoiandmoimoi',
-        characters: [],
-        story: []
+        name: 'vuvo',
+        summary: 'test case',
+        characters: characters,
+        story: story,
+        error: []
     }]
 }
 
@@ -23,7 +26,8 @@ export default (state = init_state, action) => {
                     name: action.payload.name,
                     summary: action.payload.summary,
                     characters: [],
-                    story: []
+                    story: [],
+                    error: []
                 }]
             }
             
@@ -51,14 +55,6 @@ export default (state = init_state, action) => {
                 } else return val
             })
             return {...state, books}
-        case 'DEL_PAGE': 
-            const bookss = state.books.map(val => {
-                if(val.name === state.currentBook) {
-                    return {...val, story: val.story.filter(value => value.page !== action.payload)}
-                } else return val
-            })
-
-            return {...state, books: bookss}
         case 'ADD_CHAR':
             const book = state.books.map(val => {
                 if(val.name === state.currentBook) {
@@ -74,8 +70,38 @@ export default (state = init_state, action) => {
                     }]})
                 }else return val
             })
-
             return {...state, books: book}
+        case 'ADD_ERROR':
+            const erbook = state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, error: Array.from( new Set([...val.error, action.payload]) ) }
+                } else return val
+            })
+            return {...state, books: erbook}
+        case 'REMOVE_ERROR':
+            return {...state, books: state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, error: val.error.filter(value => {
+                        return value !== action.payload
+                    })}
+                } else return val
+            })}
+        case 'DEL_PAGE': 
+            const bookss = state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, story: val.story.filter(value => value !== action.payload)}
+                } else return val
+            })
+            return {...state, books: bookss}
+        case 'DEL_SUB_CHAR':
+            const charbook = state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, characters: val.characters.filter(val => val !== action.payload)}
+                } else return val
+            })
+            return {...state, books: charbook}
+        case 'DEL_PROJECT':
+            return {...state, books: state.books.filter(val => val !== action.payload)}
         default:
             return state
     }

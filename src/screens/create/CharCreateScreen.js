@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { StyleSheet, View, Text, ScrollView, FlatList } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native'
 import { Overlay, Input, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { ADD_CHAR } from '../../lib/redux/actions/createActions'
+import { ADD_CHAR, DEL_SUB_CHAR } from '../../lib/redux/actions/createActions'
 import { SCREEN_WIDTH } from '../../utils/constant'
 
 const CharCreateScreen = () => {
@@ -75,8 +75,11 @@ const CharCreateScreen = () => {
             data={book.characters}
             keyExtractor={data => data.id}
             renderItem={({item}) => {
-                return <View>
+                return <View style={{flexDirection: 'row'}}>
                     <Text>{item.name} - lvl {item.lvl} - id [{item.id}]</Text>
+                    <TouchableOpacity onPress={() => dispatch(DEL_SUB_CHAR(item))}>
+                        <Text>DELETE</Text>
+                    </TouchableOpacity>
                 </View>
             }}
         />
