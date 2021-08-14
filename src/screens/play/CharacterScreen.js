@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
 import { Input, Overlay, Button, Slider } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { CHAR_CREATE, CHAR_DEL, CHAR_ATRB } from '../lib/redux/actions/charActions'
-import { PLAY_TEXT } from '../utils/string'
+import { CHAR_CREATE, CHAR_DEL, CHAR_ATRB } from '../../lib/redux/actions/charActions'
+import { PLAY_TEXT } from '../../utils/string'
 import { AntDesign } from '@expo/vector-icons'
 
 const CharacterScreen = () => {

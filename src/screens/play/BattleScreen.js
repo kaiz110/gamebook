@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { StyleSheet, View, Text, SafeAreaView, BackHandler, Alert, FlatList, Animated } from 'react-native'
-import { HeaderBackButton } from '@react-navigation/elements'
+import { HeaderBackButton } from '@react-navigation/stack'
 import { Slider, Divider, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../utils/constant'
-import { UPDATE_PAGE } from '../lib/redux/actions/playActions'
-import { CHAR_LEVEL_UP } from '../lib/redux/actions/charActions'
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../utils/constant'
+import { UPDATE_PAGE } from '../../lib/redux/actions/playActions'
+import { CHAR_LEVEL_UP } from '../../lib/redux/actions/charActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { CODE } from '../utils/constant'
-import { PLAY_TEXT } from '../utils/string'
+import { CODE } from '../../utils/constant'
+import { PLAY_TEXT } from '../../utils/string'
 
 const BattleScreen = ({ route, navigation }) => {
     const dispatch = useDispatch()

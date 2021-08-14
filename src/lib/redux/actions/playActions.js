@@ -5,3 +5,7 @@ export const UPDATE_PAGE = (page) => ({
     payload: page
 })
 
+export const LOAD = (book) => ({
+    type: 'LOAD',
+    payload: book
+})

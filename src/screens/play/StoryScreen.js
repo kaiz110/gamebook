@@ -3,10 +3,10 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react
 import { CommonActions } from '@react-navigation/native'
 import { Overlay, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
-import { UPDATE_PAGE } from '../lib/redux/actions/playActions'
+import { UPDATE_PAGE } from '../../lib/redux/actions/playActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { CODE, NAME_REGEX } from '../utils/constant'
-import { PLAY_TEXT } from '../utils/string'
+import { CODE, NAME_REGEX } from '../../utils/constant'
+import { PLAY_TEXT } from '../../utils/string'
 
 const StoryScreen = ({navigation, route}) => {
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const StoryScreen = ({navigation, route}) => {
     const storyName = route.params?.name
     const story = useSelector(reducer => reducer.play.story)
     const page = useSelector(reducer => reducer.play.currentPage)
-    const pageContent = story.find(val => val.page === page)
+    const pageContent = useMemo(() => story.find(val => val.page === page), [ story, page ])
 
     const subChar = useSelector(reducer => reducer.play.characters)
     const mainChar = useSelector(reducer => reducer.char)
