@@ -34,7 +34,8 @@ export const PLAY_TEXT = () => {
         create_character: 'Tạo nhân vật',
         name_character: 'Đặt tên cho nhân vật',
         create: 'Tạo',
-        you_sure_want_to_delete: 'Bạn thực sự muốn xoá nhân vật ?'
+        you_sure_want_to_delete: 'Bạn thực sự muốn xoá nhân vật ?',
+        summary: 'Tóm tắt'
     }
 }
 
@@ -101,7 +102,9 @@ export const CREATE_TEXT = () => {
         attribute_value: 'Điểm của thuộc tính',
         if_pass_go_to: 'Nếu điểm vượt qua thì đến trang',
         cancel: 'Huỷ',
-        ok: 'OK'
+        ok: 'OK',
+        already_exist: 'Đã tồn tại',
+        dup_with_current_page: 'Đã trùng lặp với trang hiện tại'
     }
 }
 

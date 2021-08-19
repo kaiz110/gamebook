@@ -6,8 +6,10 @@ import { SCREEN_WIDTH } from '../../utils/constant'
 import { AntDesign } from '@expo/vector-icons'
 import { DUMP } from '../../lib/redux/actions/shelfActions'
 import delWarn from '../../components/delWarn'
+import { PLAY_TEXT } from '../../utils/string'
 
 const HomeScreen = ({navigation}) => {
+    const TEXT = PLAY_TEXT()
     const dispatch = useDispatch()
     const bookShelf = useSelector(reducer => reducer.shelf)
     const [expand, setExpand] = useState('')
@@ -37,7 +39,7 @@ const HomeScreen = ({navigation}) => {
                 }}>
                     <View style={styles.sumExpand}>
                         <AntDesign name={expand===item.name?'up':'down'} size={18} style={{opacity: 0.25}}/>
-                        <Text style={{marginHorizontal: 25}}>SUMMARY</Text>
+                        <Text style={{marginHorizontal: 25}}>{TEXT.summary}</Text>
                         <AntDesign name={expand===item.name?'up':'down'} size={18} style={{opacity: 0.25}}/>
                     </View>
                 </TouchableOpacity>

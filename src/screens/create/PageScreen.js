@@ -38,7 +38,7 @@ const PageScreen = ({ navigation, route }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: `Page ${pageNumber}`
+            title: `${TEXT.page} ${pageNumber}`
         })
     }, [navigation, pageNumber])
 
@@ -456,7 +456,11 @@ const PageScreen = ({ navigation, route }) => {
                                     const split = type === CODE.NAVI ? na : type === CODE.DUEL ? du : type === CODE.ATRB ? at : false
                                     return split
                                 })
-                                if (h != undefined && type !== 'FTUN') setErrorOverlayText('Đã tồn tại')
+                                const same = pageNumber == +battleWin || pageNumber == +battleLose || 
+                                    pageNumber == +navi || pageNumber == +atrbPass || 
+                                    pageNumber == route1 || pageNumber == route2 || pageNumber == route3 
+                                if (h != undefined && type !== 'FTUN') setErrorOverlayText(TEXT.already_exist)
+                                else if(same) setErrorOverlayText(TEXT.dup_with_current_page)
                                 else {
                                     onCreateChoice()
                                     onCancel()
