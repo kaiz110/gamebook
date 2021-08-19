@@ -1,11 +1,11 @@
-import { story, characters } from '../../../utils/mock_data'
+import { story, characters, summary } from '../../../utils/mock_data'
 
 
 const init_state = {
     currentBook : null,
     books: [{
-        name: 'vuvo',
-        summary: 'test case',
+        name: 'Gia đình ngọt ngào',
+        summary: summary,
         characters: characters,
         story: story,
         error: []

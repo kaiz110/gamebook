@@ -1,6 +1,16 @@
+import { characters, story, summary } from "../../../utils/mock_data"
+
+const init_state = [
+    {
+        name: 'Gia đình ngọt ngào',
+        summary: summary,
+        characters: characters,
+        story: story,
+    }
+]
 
 
-export default (state = [], action) => {
+export default (state = init_state, action) => {
     switch (action.type) {
         case 'PUT_ON':
             const dup = state.find(val => val.name === action.payload.name)
@@ -10,6 +20,8 @@ export default (state = [], action) => {
             } else {
                 return [...state, action.payload]
             }
+        case 'DUMP':
+            return state.filter(val => val.name !== action.payload)
         default:
             return state
     }

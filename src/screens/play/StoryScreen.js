@@ -95,18 +95,14 @@ const StoryScreen = ({navigation, route}) => {
     }
 
     return <View style={{flex: 1}}> 
-        {pageContent.choices &&
+        {pageContent!=undefined ? pageContent.choices &&
             <FlatList
                 data={pageContent.choices}
                 keyExtractor={data => data}
                 ListHeaderComponent={<Text style={styles.content}>{pageContent.content.replace(NAME_REGEX , name)}</Text>}
-                ListFooterComponent={<Button
-                    title='Trở về page 1'
-                    onPress={() => dispatch(UPDATE_PAGE(1))}
-                />}
                 renderItem={renderItem}
             />
-        }
+        :null}
         
 
         <Overlay isVisible={escOverlay}>
