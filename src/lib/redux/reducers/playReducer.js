@@ -31,7 +31,7 @@ export default (state = null, action) => {
             return {
                 story: action.payload.story,
                 characters: action.payload.characters,
-                currentPage: 1
+                currentPage: action.payload.isNew ? 1 : action.payload.currentPage
             }
         default:
             return state

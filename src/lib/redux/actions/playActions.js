@@ -5,7 +5,7 @@ export const UPDATE_PAGE = (page) => ({
     payload: page
 })
 
-export const LOAD = (book) => ({
+export const LOAD = (book,isNew,currentPage) => ({
     type: 'LOAD',
-    payload: book
+    payload: {...book, isNew }
 })

@@ -7,6 +7,7 @@ import { UPDATE_PAGE } from '../../lib/redux/actions/playActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { CODE, NAME_REGEX } from '../../utils/constant'
 import { PLAY_TEXT } from '../../utils/string'
+import { BOOKMARK } from '../../lib/redux/actions/shelfActions'
 
 const StoryScreen = ({navigation, route}) => {
     const dispatch = useDispatch()
@@ -39,6 +40,10 @@ const StoryScreen = ({navigation, route}) => {
     useEffect(() => {
         if(mainChar == null) navigation.navigate('Character')
     },[mainChar])
+
+    useEffect(() => {
+        dispatch(BOOKMARK(storyName, page))
+    }, [page])
 
     const ftunTap = (item) => {
         const twoOrThree = item.slice(4,5) === '0' ? 2 : 3

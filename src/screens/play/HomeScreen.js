@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, Button, FlatList, TouchableOpacity, Image, Alert } from 'react-native'
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
+import { Overlay, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { LOAD } from '../../lib/redux/actions/playActions'
 import { SCREEN_WIDTH } from '../../utils/constant'
@@ -13,14 +14,16 @@ const HomeScreen = ({navigation}) => {
     const dispatch = useDispatch()
     const bookShelf = useSelector(reducer => reducer.shelf)
     const [expand, setExpand] = useState('')
+    const [currentStory, setCurrentStory] = useState(null)
+    const [overlayOpen, setOverlayOpen] = useState(false)
 
     const renderItem = ({item}) => (
         <View>
             <TouchableOpacity 
                 style={styles.cardImageContain}
                 onPress={() => {
-                    dispatch(LOAD(item))
-                    navigation.navigate('Story', {name: item.name})
+                    setOverlayOpen(true)
+                    setCurrentStory(item)
                 }}
                 onLongPress={() => delWarn( () => dispatch(DUMP(item.name)) )}
             >
@@ -60,6 +63,29 @@ const HomeScreen = ({navigation}) => {
             keyExtractor={(data,i) => data.name + i}
             renderItem={renderItem}
         />
+
+        <Overlay isVisible={overlayOpen} onBackdropPress={() => setOverlayOpen(false)}>
+            <View>
+                <Button
+                    title='New Game'
+                    buttonStyle={styles.button}
+                    onPress={() => {
+                        dispatch(LOAD(currentStory, true))
+                        setOverlayOpen(false)
+                        navigation.navigate('Story', {name: currentStory.name})
+                    }}
+                />
+                <Button
+                    title='Continue'
+                    buttonStyle={styles.button}
+                    onPress={() => {
+                        dispatch(LOAD(currentStory, false))
+                        setOverlayOpen(false)
+                        navigation.navigate('Story', {name: currentStory.name})
+                    }}
+                />
+            </View>
+        </Overlay>
     </View>
 }
 
@@ -100,6 +126,11 @@ const styles = StyleSheet.create({
         opacity: 0.5,
         borderRadius: 15,
         backgroundColor: 'indianred'
+    },
+    button: {
+        paddingHorizontal: 25, 
+        margin: 5,
+        height: 50
     }
 })
 
