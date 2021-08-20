@@ -1,12 +1,12 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native'
-import { CommonActions } from '@react-navigation/native'
+import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react'
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Alert, Image } from 'react-native'
 import { Overlay, Button } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { UPDATE_PAGE } from '../../lib/redux/actions/playActions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { CODE, NAME_REGEX } from '../../utils/constant'
+import { CODE, NAME_REGEX, SCREEN_WIDTH } from '../../utils/constant'
 import { PLAY_TEXT } from '../../utils/string'
+import { BOOKMARK } from '../../lib/redux/actions/shelfActions'
 
 const StoryScreen = ({navigation, route}) => {
     const dispatch = useDispatch()
@@ -24,6 +24,10 @@ const StoryScreen = ({navigation, route}) => {
     const [ currentChoice, setCurrentChoice ] = useState(null)
     const [ escTo, setEscTo ] = useState(null)
 
+    const [imageRatio, setImageRatio] = useState(1)
+    
+    const flatlistRef = useRef()
+
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,9 +40,20 @@ const StoryScreen = ({navigation, route}) => {
         })
     }, [navigation])
 
+
     useEffect(() => {
         if(mainChar == null) navigation.navigate('Character')
     },[mainChar])
+
+
+    useEffect(() => {
+        dispatch(BOOKMARK(storyName, page))
+        
+        Image.getSize(`data:image/jpeg;base64,${pageContent.image}`, (w,h) => setImageRatio(w/h), (e)=>{})
+
+        if(flatlistRef!=undefined) flatlistRef.current.scrollToOffset({ offset: 0})
+    }, [page])
+
 
     const ftunTap = (item) => {
         const twoOrThree = item.slice(4,5) === '0' ? 2 : 3
@@ -54,6 +69,22 @@ const StoryScreen = ({navigation, route}) => {
 
         setEscTo(toPage)
     }
+
+
+    const listHeader = () => (
+        <View>
+            {pageContent.image != '' &&
+            <View style={{alignItems: 'center', margin: 10}}>
+                <Image 
+                    source={{uri: `data:image/jpeg;base64,${pageContent.image}`}}
+                    style={{width: SCREEN_WIDTH - 20, height: (SCREEN_WIDTH - 20) / imageRatio, borderRadius: 2}}
+                />
+            </View>
+            }
+
+            <Text style={styles.content}>{pageContent.content.replace(NAME_REGEX , name)}</Text>
+        </View>
+    )
 
     const renderItem = ({item}) => {
         let atrb, require
@@ -95,18 +126,16 @@ const StoryScreen = ({navigation, route}) => {
     }
 
     return <View style={{flex: 1}}> 
-        {pageContent.choices &&
+        {pageContent!=undefined ? pageContent.choices &&
             <FlatList
                 data={pageContent.choices}
                 keyExtractor={data => data}
-                ListHeaderComponent={<Text style={styles.content}>{pageContent.content.replace(NAME_REGEX , name)}</Text>}
-                ListFooterComponent={<Button
-                    title='Trở về page 1'
-                    onPress={() => dispatch(UPDATE_PAGE(1))}
-                />}
+                ListHeaderComponent={listHeader}
+                contentContainerStyle={{paddingBottom: 10}}
+                ref={flatlistRef}
                 renderItem={renderItem}
             />
-        }
+        :null}
         
 
         <Overlay isVisible={escOverlay}>

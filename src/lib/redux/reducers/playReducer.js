@@ -1,5 +1,3 @@
-import {story, characters} from '../../../utils/mock_data'
-
 // story : [{
 //     page: 1,
 //     content: ``,
@@ -17,13 +15,13 @@ import {story, characters} from '../../../utils/mock_data'
 //     exp: 0
 // }
 
-const init_state = {
-    story,
-    characters, 
-    currentPage: 1,
-}
+// const init_state = {
+//     story,
+//     characters, 
+//     currentPage: 1,
+// }
 
-export default (state = init_state, action) => {
+export default (state = null, action) => {
     switch(action.type) {
         case 'UPDATE_PAGE':
             return {...state, currentPage: action.payload}
@@ -33,7 +31,7 @@ export default (state = init_state, action) => {
             return {
                 story: action.payload.story,
                 characters: action.payload.characters,
-                currentPage: 1
+                currentPage: action.payload.isNew ? 1 : action.payload.currentPage
             }
         default:
             return state

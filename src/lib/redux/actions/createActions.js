@@ -15,9 +15,14 @@ export const DEL_PROJECT = (book) => ({
     payload: book
 })
 
-export const ADD_PAGE = (edit, page, content, choices, branch) => ({
+export const ADD_BG_IMAGE = (image) => ({
+    type: 'ADD_BG_IMAGE',
+    payload: image
+})
+
+export const ADD_PAGE = (edit, page, content, choices, branch, image) => ({
     type: 'ADD_PAGE',
-    payload: { edit, page, content, choices, branch }
+    payload: { edit, page, content, choices, branch, image }
 })
 
 export const DEL_PAGE = (page) => ({

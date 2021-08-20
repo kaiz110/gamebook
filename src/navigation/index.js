@@ -13,26 +13,40 @@ import DetailScreen from '../screens/create/DetailScreen'
 import PageScreen from '../screens/create/PageScreen'
 import CharCreateScreen from '../screens/create/CharCreateScreen'
 
+import { Entypo } from '@expo/vector-icons'
+
 const Stack = createStackNavigator()
 const SubStack = createStackNavigator()
 const BottomTab = createBottomTabNavigator()
 
 const Home = () => (
     <SubStack.Navigator>
-        <SubStack.Screen name='Home' component={HomeScreen} options={{headerTitleAlign: 'center'}}/>
+        <SubStack.Screen name='Home' component={HomeScreen} options={{headerTitleAlign: 'center', title: 'Gamebook'}}/>
     </SubStack.Navigator>
 )
 
 const List = () => (
     <SubStack.Navigator>
-        <SubStack.Screen name='List' component={ListScreen} options={{headerTitleAlign: 'center'}}/>
+        <SubStack.Screen name='List' component={ListScreen} options={{headerTitleAlign: 'center', title: 'Create'}}/>
     </SubStack.Navigator>
 )
 
 const Tab = () => (
-    <BottomTab.Navigator>
-        <BottomTab.Screen name='HomeT' component={Home}/>
-        <BottomTab.Screen name='ListT' component={List}/>
+    <BottomTab.Navigator tabBarOptions={{showLabel: false}}>
+        <BottomTab.Screen name='HomeT' 
+            component={Home} 
+            options={{
+                tabBarIcon: ({focused,color, size}) => (
+                    <Entypo name='controller-play' color={color} size={focused?size+6:size}/>
+                )
+            }}/>
+        <BottomTab.Screen name='ListT' 
+            component={List}
+            options={{
+                tabBarIcon: ({focused,color, size}) => {
+                    return <Entypo name='pencil' color={color} size={focused?size+5:size}/>
+                }
+            }}/>
     </BottomTab.Navigator>
 )
 
