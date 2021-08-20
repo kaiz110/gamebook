@@ -12,7 +12,8 @@ export const story = [
         choices: [
             'NAVI0002-@main giật mình kêu lên một tiếng, ngồi bật dậy.'
         ],
-        branch: []
+        branch: [],
+        image: ''
     },
     {
         page: 2,
@@ -28,7 +29,8 @@ export const story = [
         choices: [
             'NAVI0003-Tiếp tục',
         ],
-        branch: []
+        branch: [],
+        image: ''
     },
     {
         page: 3,
@@ -40,7 +42,8 @@ export const story = [
         choices: [
             'NAVI0004-Tiếp tục'
         ],
-        branch: []
+        branch: [],
+        image: ''
     },
     {
         page: 4,
@@ -51,7 +54,8 @@ export const story = [
         branch: [
             'FTUN0010SU-0005',
             'FTUN0010FA=0006'
-        ]
+        ],
+        image: ''
     },
     {
         page: 5,
@@ -59,7 +63,8 @@ export const story = [
         choices: [
             'NAVI0001-Quay lại trang 1.'
         ],
-        branch: []
+        branch: [],
+        image: ''
     },
     {
         page: 6,
@@ -69,7 +74,8 @@ export const story = [
         choices: [
             'NAVI0001-Quay lại trang 1.'
         ],
-        branch: []
+        branch: [],
+        image: ''
     },
     
 ]

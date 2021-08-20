@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
                 }}
                 onLongPress={() => delWarn( () => dispatch(DUMP(item.name)) )}
             >
-                <Image blurRadius={0.5} style={{flex: 1, borderRadius: 5}} source={{uri: `http://hd.wallpaperswide.com/thumbs/we_love_trees-t2.jpg`}}/>
+                <Image blurRadius={0.5} style={{flex: 1, borderRadius: 5}} source={{uri: `data:image/jpeg;base64,${item.bimage}`}}/>
                 
                 <View style={styles.textWrap}>
                     <Text style={styles.text}>{item.name}</Text>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     cardImageContain: {
         margin: 10,
         width: SCREEN_WIDTH - 20, 
-        height: SCREEN_WIDTH/2.5, 
+        height: (SCREEN_WIDTH - 20) / 1.777, 
         backgroundColor: '#dedede'
     },
     textWrap: {
@@ -105,8 +105,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0, 
         right: 0,
-        backgroundColor: '#3d3d3d', 
-        opacity: 0.75,
+        backgroundColor: 'rgba(55,55,55,0.55)', 
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5

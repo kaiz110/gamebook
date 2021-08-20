@@ -2,11 +2,12 @@ import { characters, story, summary } from "../../../utils/mock_data"
 
 const init_state = [
     {
-        name: 'Gia đình ngọt ngào',
+        name: 'Default',
         summary: summary,
         characters: characters,
         story: story,
-        currentPage: 1
+        currentPage: 1,
+        bimage: ''
     }
 ]
 

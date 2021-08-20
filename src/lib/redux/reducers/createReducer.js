@@ -4,11 +4,12 @@ import { story, characters, summary } from '../../../utils/mock_data'
 const init_state = {
     currentBook : null,
     books: [{
-        name: 'Gia đình ngọt ngào',
+        name: 'Default',
         summary: summary,
         characters: characters,
         story: story,
-        error: []
+        error: [],
+        bimage: ''
     }]
 }
 
@@ -27,16 +28,23 @@ export default (state = init_state, action) => {
                     summary: action.payload.summary,
                     characters: [],
                     story: [],
-                    error: []
+                    error: [],
+                    bimage: ''
                 }]
             }
-            
+        case 'ADD_BG_IMAGE':
+            return {...state, books: state.books.map(val => {
+                if(val.name === state.currentBook) {
+                    return {...val, bimage: action.payload} // base64
+                } else return val
+            })}
         case 'ADD_PAGE':
             const obj = {
                 page: action.payload.page,
                 content: action.payload.content,
                 choices: action.payload.choices,
-                branch: action.payload.branch
+                branch: action.payload.branch,
+                image: action.payload.image
             }
 
             const books = state.books.map(val => {

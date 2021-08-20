@@ -91,6 +91,7 @@ export const CREATE_TEXT = () => {
         over: 'vượt qua',
         will_go_to: 'sẽ đến trang',
         add_choice: 'Thêm lựa chọn',
+        add_image: 'Thêm ảnh',
         choice_content: 'Nội dung lựa chọn',
         to_page: 'Đến trang',
         battle_with: 'Chiến đấu với ... ( ID )',

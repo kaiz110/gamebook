@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useMemo, useRef, useLayoutEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react'
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { Input, Button, Overlay, CheckBox, Divider } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import delWarn from '../../components/delWarn'
-import { ADD_ERROR, ADD_PAGE, REMOVE_ERROR } from '../../lib/redux/actions/createActions'
+import openImage from '../../components/openImage'
+import { ADD_PAGE } from '../../lib/redux/actions/createActions'
 import { CODE, SCREEN_WIDTH } from '../../utils/constant'
 import { CREATE_TEXT } from '../../utils/string'
 
@@ -18,6 +19,7 @@ const PageScreen = ({ navigation, route }) => {
     const [substance, setSubstance] = useState(page != undefined ? page.content : '')
     const [choices, setChoices] = useState(page != undefined ? page.choices : [])
     const [branch, setBranch] = useState(page != undefined ? page.branch : [])
+    const [image, setImage] = useState(page != undefined ? page.image : '')
     const [showChoice, setShowChoice] = useState(false) // overlay
     const [type, setType] = useState('') //  navigation, fortune, battle and attribute
     const [twoRoute, setTwoRoute] = useState(true)
@@ -156,6 +158,13 @@ const PageScreen = ({ navigation, route }) => {
             />
         </View>
 
+        {image != '' &&
+        <View style={styles.imageContainer}>
+            <Image 
+                source={{uri: `data:image/jped;base64,${image}`}} 
+                style={styles.image}/>
+        </View>}
+
         {choices.map((item, idex) => {
             const navipage = book.story.find(val => val.page === +item.slice(4, 8))
             const naviNow = item.substr(0, 4) === CODE.NAVI && navipage == undefined
@@ -245,6 +254,7 @@ const PageScreen = ({ navigation, route }) => {
             </TouchableOpacity>
         })}
 
+
         <View>
             <Button
                 title={TEXT.add_choice}
@@ -255,16 +265,29 @@ const PageScreen = ({ navigation, route }) => {
             />
 
             <Button
+                title={TEXT.add_image}
+                type='clear'
+                containerStyle={{ margin: 10, marginTop: 0 }}
+                buttonStyle={{ height: 50 }}
+                onPress={async () => {
+                    const resultImage = await openImage(false)
+                    if(resultImage != null) setImage(resultImage)
+                }}
+            />
+
+            <Button
                 title={TEXT.save}
                 raised
                 containerStyle={{ margin: 10, marginTop: 0 }}
                 buttonStyle={{ height: 50 }}
                 onPress={() => {
-                    dispatch(ADD_PAGE(page != undefined, pageNumber, substance, choices, branch))
+                    dispatch(ADD_PAGE(page != undefined, pageNumber, substance, choices, branch, image))
                     navigation.goBack()
                 }}
             />
         </View>
+
+        
 
         <Overlay isVisible={showChoice} onBackdropPress={onCancel}>
             <View style={{ margin: 10, width: SCREEN_WIDTH * 0.85 }}>
@@ -496,6 +519,16 @@ const styles = StyleSheet.create({
     },
     er: {
         color: 'red'
+    },
+    imageContainer: {
+        margin: 10
+    },
+    image: {
+        width: SCREEN_WIDTH - 20, 
+        height: SCREEN_WIDTH - 20, 
+        borderRadius: 2,
+        alignSelf: 'center', 
+        resizeMode: 'contain'
     },
     choiceCardCon: {
         margin: 10, 

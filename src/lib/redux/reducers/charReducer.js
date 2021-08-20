@@ -1,17 +1,6 @@
 
-const init = {
-    name: 'Người vô danh',
-    hp: 80,
-    atk: 5,
-    def: 0,
-    agi: 5,
-    lvl: 1,
-    exp: 0,
-    lvlupExp: 55,
-    skillPoint: 0,
-}
 
-export default (state = init, action) => {
+export default (state = null, action) => {
     switch(action.type){
         case 'CHAR_CREATE':
             return {
